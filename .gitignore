@@ -49,6 +49,7 @@ logs/
 *.jpeg
 *.bmp
 *.gif
+!screenshot.png
 !resources/**/*.pdf
 !resources/**/*.png
 !resources/**/*.jpg
