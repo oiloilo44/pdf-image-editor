@@ -1,9 +1,9 @@
 import tkinter as tk
-from gui.unified_pdf_editor import UnifiedPDFEditor
+from gui import PDFEditorApp
 
 def main():
     root = tk.Tk()
-    app = UnifiedPDFEditor(root)
+    app = PDFEditorApp(root)
     app.run()
 
 if __name__ == '__main__':
