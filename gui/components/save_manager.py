@@ -19,6 +19,13 @@ class SaveManager:
             messagebox.showerror('오류', '삽입할 이미지가 없습니다.')
             return
         
+        # 저장 옵션 대화상자 표시
+        save_options = self._show_save_options_dialog()
+        if not save_options:
+            return
+            
+        all_pages = save_options.get('all_pages', False)
+        
         # 저장 폴더 선택
         save_dir = filedialog.askdirectory(title='저장할 폴더 선택')
         if not save_dir:
@@ -97,11 +104,11 @@ class SaveManager:
             
             try:
                 # 300 dpi 이미지 로드 (출력용)
-                base_img = pdf_image_utils.pdf_to_image(pdf_path, dpi=300)
+                base_img = pdf_image_utils.pdf_to_image(pdf_path, dpi=300, page=0)
                 output_w, output_h = base_img.size
                 
                 # 100 dpi 원본 이미지 로드 (미리보기 전 크기)
-                orig_preview_img = pdf_image_utils.pdf_to_image(pdf_path, dpi=100)
+                orig_preview_img = pdf_image_utils.pdf_to_image(pdf_path, dpi=100, page=0)
                 orig_preview_w, orig_preview_h = orig_preview_img.size
                 
                 # 현재 캔버스에 표시된 이미지 크기 얻기
@@ -133,7 +140,7 @@ class SaveManager:
                         'size': (w, h)
                     })
                 
-                pdf_image_utils.insert_image_to_pdf(pdf_path, insert_infos, save_path, dpi=300)
+                pdf_image_utils.insert_image_to_pdf(pdf_path, insert_infos, save_path, dpi=300, all_pages=all_pages)
                 success_count += 1
             except Exception as e:
                 messagebox.showerror('오류', f'{base_name} 저장 중 오류 발생: {str(e)}')
@@ -152,6 +159,68 @@ class SaveManager:
         self._show_completion_dialog(save_dir, success_count, total_pdfs)
         
         return success_count
+
+    def _show_save_options_dialog(self):
+        """저장 옵션을 선택하는 대화상자를 표시합니다."""
+        # root 객체 가져오기
+        root = self.parent.root if hasattr(self.parent, 'root') else self.parent
+        
+        options = {}
+        dialog = tk.Toplevel(root)
+        dialog.title('저장 옵션')
+        dialog.transient(root)
+        dialog.grab_set()
+        dialog.resizable(False, False)
+        
+        # 다이얼로그 중앙 위치 설정
+        dialog.geometry("+%d+%d" % (
+            root.winfo_rootx() + root.winfo_width() // 2 - 150,
+            root.winfo_rooty() + root.winfo_height() // 2 - 75
+        ))
+        
+        # 메인 프레임
+        main_frame = ttk.Frame(dialog, padding=15)
+        main_frame.pack(fill='both', expand=True)
+        
+        # 체크박스 변수
+        all_pages_var = tk.BooleanVar(value=False)
+        
+        # 체크박스
+        ttk.Checkbutton(
+            main_frame,
+            text='다중 페이지 PDF의 모든 페이지에 이미지 삽입',
+            variable=all_pages_var
+        ).pack(anchor='w', padx=10, pady=10)
+        
+        # 버튼 프레임
+        btn_frame = ttk.Frame(main_frame)
+        btn_frame.pack(fill='x', pady=(10, 0))
+        
+        # 취소 버튼
+        ttk.Button(
+            btn_frame,
+            text='취소',
+            command=dialog.destroy
+        ).pack(side='right', padx=(10, 0))
+        
+        # 확인 버튼
+        def on_ok():
+            options['all_pages'] = all_pages_var.get()
+            dialog.destroy()
+            
+        ttk.Button(
+            btn_frame,
+            text='확인',
+            command=on_ok
+        ).pack(side='right', padx=(0, 5))
+        
+        # ESC로 닫기
+        dialog.bind('<Escape>', lambda e: dialog.destroy())
+        
+        # 대화상자를 모달로 표시
+        dialog.wait_window()
+        
+        return options if options else None
 
     def _show_completion_dialog(self, save_dir, success_count, total_count):
         """저장 완료 다이얼로그를 표시하고 폴더 열기 버튼을 제공합니다."""
