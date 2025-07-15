@@ -5,7 +5,7 @@ from gui.components import PDFManager, ImageManager, CanvasManager, SaveManager
 class PDFEditorApp:
     def __init__(self, root):
         self.root = root
-        self.root.title('PDF 이미지 삽입 도구')
+        self.root.title('PDF 이미지 편집 도구')
         self.root.configure(bg='#f0f0f0')
         
         # UI 구성

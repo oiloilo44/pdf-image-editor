@@ -1,8 +1,8 @@
-# PDF 이미지 일괄 삽입 툴 (PDF Image Inserter)
+# PDF 이미지 일괄 편집 툴 (PDF Image Editor)
 
-이 프로젝트는 여러 PDF 파일에 이미지를 일괄 삽입할 수 있는 GUI 도구입니다. PDF 문서에 로고, 워터마크, 서명, 도장 등을 쉽고 빠르게 삽입할 수 있습니다.
+이 프로젝트는 여러 PDF 파일에 이미지를 일괄 편집할 수 있는 GUI 도구입니다. PDF 문서에 로고, 워터마크, 서명, 도장 등을 쉽고 빠르게 삽입하고 편집할 수 있습니다.
 
-![PDF Image Inserter 스크린샷](screenshot.png)
+![PDF Image Editor 스크린샷](screenshot.png)
 
 ## 주요 기능
 
@@ -31,8 +31,8 @@
 
 1. 저장소 클론 또는 다운로드:
    ```bash
-   git clone https://github.com/yourusername/pdf_image_inserter.git
-   cd pdf_image_inserter
+   git clone https://github.com/yourusername/pdf-image-editor.git
+   cd pdf-image-editor
    ```
 
 2. 의존성 설치:
@@ -48,23 +48,23 @@
 ## 프로젝트 구조
 
 ```
-pdf_image_inserter/
+pdf-image-editor/
 ├── gui/
-│   └── unified_pdf_editor.py       # 통합 PDF 이미지 편집 GUI (복수 PDF 지원)
+│   └── pdf_editor_app.py          # 통합 PDF 이미지 편집 GUI (복수 PDF 지원)
 ├── core/
-│   ├── pdf_image_utils.py          # PDF→이미지 변환, 이미지 합성, PDF 저장 등 핵심 로직
-│   └── config.py                   # poppler 경로 등 환경설정
+│   ├── pdf_image_utils.py         # PDF→이미지 변환, 이미지 합성, PDF 저장 등 핵심 로직
+│   └── config.py                  # poppler 경로 등 환경설정
 ├── resources/
-│   └── poppler/                    # poppler 바이너리 등 외부 리소스
-├── main.py                         # 진입점(실행 스크립트)
-├── requirements.txt                # 의존성 명시(uv용)
-├── .gitignore                      # Git 제외 파일 설정
-└── README.md                       # 프로젝트 설명서
+│   └── poppler/                   # poppler 바이너리 등 외부 리소스
+├── main.py                        # 진입점(실행 스크립트)
+├── requirements.txt               # 의존성 명시(uv용)
+├── .gitignore                     # Git 제외 파일 설정
+└── README.md                      # 프로젝트 설명서
 ```
 
 ## 주요 모듈 설명
 
-- **gui/unified_pdf_editor.py**: 통합 PDF 이미지 편집 GUI 클래스 (UnifiedPDFEditor)
+- **gui/pdf_editor_app.py**: 통합 PDF 이미지 편집 GUI 클래스 (PDFEditorApp)
 - **core/pdf_image_utils.py**: PDF를 이미지로 변환, 이미지 합성, PDF로 저장 등 핵심 기능 제공
 - **core/config.py**: poppler 경로 등 환경설정 상수/함수
 - **resources/poppler/**: PDF 처리를 위한 poppler 바이너리 및 관련 리소스
@@ -84,6 +84,4 @@ pdf_image_inserter/
 
 ## 연락처
 
-프로젝트 관리자 - [@yourusername](https://github.com/yourusername) - email@example.com
-
-프로젝트 링크: [https://github.com/yourusername/pdf_image_inserter](https://github.com/yourusername/pdf_image_inserter)
+프로젝트 링크: [https://github.com/yourusername/pdf-image-editor](https://github.com/yourusername/pdf-image-editor)
